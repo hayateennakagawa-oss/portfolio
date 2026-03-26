@@ -1,0 +1,1258 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>業務自動化 × 広告運用｜フリーランス ポートフォリオ</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Epilogue:wght@700;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f7f6f2;
+    --ink: #1a1a18;
+    --muted: #7a7a72;
+    --border: #e2e0d8;
+    --accent: #2a5cff;
+    --accent-soft: #eef1ff;
+    --accent2: #ff5c2a;
+    --white: #ffffff;
+    --card: #ffffff;
+    --tag-bg: #f0efe9;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 300;
+    line-height: 1.8;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 48px;
+  }
+
+  .nav-logo {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 28px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 13px;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--ink); }
+
+  /* ── HERO ── */
+  .hero {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 100px 48px 80px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: center;
+  }
+
+  .hero-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.1s forwards;
+  }
+
+  .hero-title {
+    font-family: 'Epilogue', sans-serif;
+    font-size: clamp(40px, 5vw, 64px);
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.2s forwards;
+  }
+
+  .hero-title .underline {
+    position: relative;
+    display: inline-block;
+  }
+
+  .hero-title .underline::after {
+    content: '';
+    position: absolute;
+    bottom: 4px;
+    left: 0;
+    right: 0;
+    height: 6px;
+    background: var(--accent);
+    opacity: 0.2;
+    border-radius: 2px;
+  }
+
+  .hero-desc {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.9;
+    margin-bottom: 36px;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.3s forwards;
+  }
+
+  .hero-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 40px;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.4s forwards;
+  }
+
+  .tag {
+    font-size: 12px;
+    padding: 5px 12px;
+    border-radius: 100px;
+    background: var(--tag-bg);
+    color: var(--muted);
+    border: 1px solid var(--border);
+  }
+
+  .tag.blue {
+    background: var(--accent-soft);
+    color: var(--accent);
+    border-color: rgba(42,92,255,0.2);
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 36px;
+    padding-top: 36px;
+    border-top: 1px solid var(--border);
+    opacity: 0;
+    animation: fadeUp 0.7s 0.5s forwards;
+  }
+
+  .stat-num {
+    font-family: 'Epilogue', sans-serif;
+    font-size: 32px;
+    font-weight: 900;
+    color: var(--ink);
+    line-height: 1;
+  }
+
+  .stat-num sup {
+    font-size: 16px;
+    color: var(--accent);
+  }
+
+  .stat-label {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  /* Hero Right - Before/After Card */
+  .hero-visual {
+    opacity: 0;
+    animation: fadeUp 0.7s 0.4s forwards;
+  }
+
+  .before-after {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.06);
+  }
+
+  .ba-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .ba-col {
+    padding: 20px 24px;
+  }
+
+  .ba-col.before {
+    background: #fff8f6;
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .ba-col.after {
+    background: #f0f4ff;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .ba-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .ba-col.before .ba-label { color: var(--accent2); }
+  .ba-col.after .ba-label { color: var(--accent); }
+
+  .ba-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 8px;
+    line-height: 1.5;
+  }
+
+  .ba-item .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    margin-top: 5px;
+    flex-shrink: 0;
+  }
+
+  .ba-col.before .dot { background: var(--accent2); }
+  .ba-col.after .dot { background: var(--accent); }
+
+  .ba-flow {
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .flow-step {
+    font-size: 12px;
+    padding: 6px 14px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    border-radius: 100px;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .flow-arrow {
+    color: var(--muted);
+    font-size: 14px;
+  }
+
+  /* ── SECTION BASE ── */
+  .section {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 80px 48px;
+  }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+
+  .section-title {
+    font-family: 'Epilogue', sans-serif;
+    font-size: 32px;
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+  }
+
+  .section-sub {
+    font-size: 14px;
+    color: var(--muted);
+    margin-bottom: 48px;
+  }
+
+  .divider { border: none; border-top: 1px solid var(--border); }
+
+  /* ── WORKS ── */
+  .works-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .work-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    transition: box-shadow 0.3s, transform 0.3s;
+  }
+
+  .work-card:hover {
+    box-shadow: 0 12px 48px rgba(0,0,0,0.08);
+    transform: translateY(-2px);
+  }
+
+  .work-body {
+    padding: 36px 40px;
+  }
+
+  .work-cat {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+
+  .work-title {
+    font-family: 'Epilogue', sans-serif;
+    font-size: 22px;
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    margin-bottom: 12px;
+    line-height: 1.3;
+  }
+
+  .work-pain {
+    font-size: 13px;
+    color: var(--muted);
+    background: #fff8f6;
+    border-left: 3px solid var(--accent2);
+    padding: 10px 14px;
+    border-radius: 0 8px 8px 0;
+    margin-bottom: 16px;
+    line-height: 1.7;
+  }
+
+  .work-solve {
+    font-size: 13px;
+    color: var(--ink);
+    line-height: 1.8;
+    margin-bottom: 20px;
+  }
+
+  .work-techs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .work-tech {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    padding: 4px 10px;
+    background: var(--tag-bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    color: var(--muted);
+  }
+
+  /* Video Panel */
+  .work-video {
+    background: var(--ink);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 32px;
+    gap: 16px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .work-video::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 80% at 50% 50%, rgba(42,92,255,0.15), transparent);
+  }
+
+  .video-wrapper {
+    position: relative;
+    width: 100%;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #000;
+    aspect-ratio: 16/9;
+    z-index: 1;
+  }
+
+  .video-wrapper iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+  }
+
+  /* placeholder for no video yet */
+  .video-placeholder {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: rgba(255,255,255,0.05);
+    border: 1px dashed rgba(255,255,255,0.15);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    z-index: 1;
+    position: relative;
+  }
+
+  .video-placeholder .play-icon {
+    width: 48px;
+    height: 48px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+  }
+
+  .video-placeholder p {
+    font-size: 12px;
+    color: rgba(255,255,255,0.4);
+    text-align: center;
+    font-family: 'DM Mono', monospace;
+  }
+
+  .video-label {
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.1em;
+    z-index: 1;
+  }
+
+  .work-result-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 100px;
+    padding: 8px 16px;
+    z-index: 1;
+  }
+
+  .result-dot {
+    width: 8px;
+    height: 8px;
+    background: #4fffb0;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  .result-text {
+    font-size: 12px;
+    color: rgba(255,255,255,0.7);
+    font-family: 'DM Mono', monospace;
+  }
+
+  /* ── SERVICES ── */
+  .services-intro {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px 40px;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .services-intro-icon {
+    font-size: 36px;
+    flex-shrink: 0;
+  }
+
+  .services-intro p {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.8;
+  }
+
+  .services-intro strong {
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .service-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px;
+    transition: box-shadow 0.3s, transform 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .service-card:hover {
+    box-shadow: 0 8px 32px rgba(0,0,0,0.07);
+    transform: translateY(-2px);
+  }
+
+  .service-card.featured {
+    border-color: rgba(42,92,255,0.3);
+    background: linear-gradient(135deg, #fafbff, var(--white));
+  }
+
+  .featured-badge {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    background: var(--accent);
+    color: white;
+    border-radius: 100px;
+  }
+
+  .service-icon {
+    font-size: 28px;
+    margin-bottom: 16px;
+  }
+
+  .service-name {
+    font-family: 'Epilogue', sans-serif;
+    font-size: 18px;
+    font-weight: 900;
+    letter-spacing: -0.01em;
+    margin-bottom: 10px;
+  }
+
+  .service-desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.8;
+    margin-bottom: 20px;
+  }
+
+  .service-includes {
+    list-style: none;
+    margin-bottom: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .service-includes li {
+    font-size: 12px;
+    color: var(--muted);
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    line-height: 1.5;
+  }
+
+  .service-includes li::before {
+    content: '✓';
+    color: var(--accent);
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .service-price-row {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+  }
+
+  .price-from {
+    font-size: 11px;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+  }
+
+  .price-num {
+    font-family: 'Epilogue', sans-serif;
+    font-size: 28px;
+    font-weight: 900;
+    color: var(--ink);
+    letter-spacing: -0.02em;
+  }
+
+  .price-unit {
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .price-note {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 6px;
+    line-height: 1.5;
+  }
+
+  /* ── FLOW ── */
+  .flow-section {
+    background: var(--ink);
+    padding: 80px 0;
+  }
+
+  .flow-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 48px;
+  }
+
+  .flow-inner .section-label { color: rgba(255,255,255,0.4); }
+  .flow-inner .section-title { color: white; }
+  .flow-inner .section-sub { color: rgba(255,255,255,0.4); }
+
+  .flow-steps {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0;
+    position: relative;
+  }
+
+  .flow-steps::before {
+    content: '';
+    position: absolute;
+    top: 28px;
+    left: 10%;
+    right: 10%;
+    height: 1px;
+    background: rgba(255,255,255,0.1);
+  }
+
+  .flow-step-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 0 12px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .flow-num {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 16px;
+  }
+
+  .flow-step-item.active .flow-num {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: white;
+  }
+
+  .flow-step-title {
+    font-size: 13px;
+    color: white;
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+
+  .flow-step-desc {
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+    line-height: 1.6;
+  }
+
+  /* ── FAQ ── */
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .faq-item {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .faq-q {
+    padding: 20px 24px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    user-select: none;
+  }
+
+  .faq-q::after {
+    content: '+';
+    font-size: 20px;
+    color: var(--accent);
+    font-weight: 300;
+    flex-shrink: 0;
+    transition: transform 0.3s;
+  }
+
+  .faq-item.open .faq-q::after {
+    transform: rotate(45deg);
+  }
+
+  .faq-a {
+    display: none;
+    padding: 0 24px 20px;
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.8;
+    border-top: 1px solid var(--border);
+    padding-top: 16px;
+  }
+
+  .faq-item.open .faq-a { display: block; }
+
+  /* ── CTA ── */
+  .cta-section {
+    background: var(--white);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    text-align: center;
+    padding: 80px 48px;
+  }
+
+  .cta-title {
+    font-family: 'Epilogue', sans-serif;
+    font-size: clamp(32px, 5vw, 56px);
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    margin-bottom: 16px;
+    line-height: 1.1;
+  }
+
+  .cta-sub {
+    font-size: 14px;
+    color: var(--muted);
+    margin-bottom: 40px;
+    line-height: 1.8;
+  }
+
+  .cta-buttons {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 16px 36px;
+    background: var(--accent);
+    color: white;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 100px;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(42,92,255,0.3);
+  }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 16px 36px;
+    background: transparent;
+    color: var(--ink);
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 100px;
+    text-decoration: none;
+    border: 1px solid var(--border);
+    transition: background 0.2s, border-color 0.2s;
+  }
+
+  .btn-secondary:hover {
+    background: var(--tag-bg);
+    border-color: var(--ink);
+  }
+
+  .cta-note {
+    margin-top: 20px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 32px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  footer p {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 14px 20px; }
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; padding: 80px 20px 60px; gap: 40px; }
+    .section { padding: 60px 20px; }
+    .work-card { grid-template-columns: 1fr; }
+    .work-video { min-height: 220px; }
+    .services-grid { grid-template-columns: 1fr; }
+    .flow-steps { grid-template-columns: 1fr; gap: 24px; }
+    .flow-steps::before { display: none; }
+    .flow-section { padding: 60px 0; }
+    .flow-inner { padding: 0 20px; }
+    footer { padding: 24px 20px; flex-direction: column; gap: 8px; }
+    .cta-section { padding: 60px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Portfolio · 業務自動化 × 広告運用</div>
+  <ul class="nav-links">
+    <li><a href="#works">実績</a></li>
+    <li><a href="#services">サービス</a></li>
+    <li><a href="#flow">依頼の流れ</a></li>
+    <li><a href="#faq">よくある質問</a></li>
+    <li><a href="#contact">相談する</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div>
+    <p class="hero-eyebrow">// フリーランス · フルリモート対応</p>
+    <h1 class="hero-title">
+      その<span class="underline">手作業</span>、<br>
+      仕組みで<br>なくせます。
+    </h1>
+    <p class="hero-desc">
+      毎週の集計・転記・メール送信、<br>
+      まだ手でやっていますか？<br>
+      GASとスプレッドシートで、繰り返し業務を自動化します。<br>
+      広告運用の分析環境構築も対応。
+    </p>
+    <div class="hero-tags">
+      <span class="tag blue">Meta広告 5年</span>
+      <span class="tag blue">Google広告</span>
+      <span class="tag blue">GAS / API連携</span>
+      <span class="tag">スプレッドシート設計</span>
+      <span class="tag">レポート自動化</span>
+      <span class="tag">フルリモート</span>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">5<sup>年+</sup></div>
+        <div class="stat-label">Meta広告運用歴</div>
+      </div>
+      <div>
+        <div class="stat-num">0<sup>円</sup></div>
+        <div class="stat-label">相談・見積もり費用</div>
+      </div>
+      <div>
+        <div class="stat-num">100<sup>%</sup></div>
+        <div class="stat-label">リモート対応</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Before / After Visual -->
+  <div class="hero-visual">
+    <div class="before-after">
+      <div class="ba-header">
+        <div class="ba-col before">
+          <div class="ba-label">Before · 今の状態</div>
+          <div class="ba-item"><span class="dot"></span>フォーム回答を手動でスプレッドシートに転記</div>
+          <div class="ba-item"><span class="dot"></span>メール通知も毎回手作業</div>
+          <div class="ba-item"><span class="dot"></span>広告レポートを月末に手集計</div>
+          <div class="ba-item"><span class="dot"></span>ミスや対応漏れが起きやすい</div>
+        </div>
+        <div class="ba-col after">
+          <div class="ba-label">After · 自動化後</div>
+          <div class="ba-item"><span class="dot"></span>送信された瞬間に自動集計</div>
+          <div class="ba-item"><span class="dot"></span>Gmailへ即時通知が届く</div>
+          <div class="ba-item"><span class="dot"></span>広告数値が毎日自動更新</div>
+          <div class="ba-item"><span class="dot"></span>担当者の作業はゼロ</div>
+        </div>
+      </div>
+      <div class="ba-flow">
+        <span class="flow-step">フォーム送信</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">自動集計</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">Gmail通知</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- WORKS -->
+<section class="section" id="works">
+  <p class="section-label fade-in">// 制作実績</p>
+  <h2 class="section-title fade-in">こんな課題を解決してきました</h2>
+  <p class="section-sub fade-in">実際に構築したツールの動作デモ動画を掲載しています。</p>
+
+  <div class="works-grid">
+
+    <!-- WORK 1: フォーム自動化 -->
+    <div class="work-card fade-in">
+      <div class="work-body">
+        <div class="work-cat">GAS × Googleフォーム · 初級編</div>
+        <div class="work-title">問い合わせ対応の<br>完全自動化</div>
+        <div class="work-pain">
+          😓 「フォームに回答が来るたびに確認して、スプレッドシートに手入力して、メールで返信して…と時間を取られていた」
+        </div>
+        <div class="work-solve">
+          Googleフォームの送信をトリガーに、回答をスプレッドシートへ自動集計。同時に担当者のGmailへ通知メールを自動送信。対応漏れを防ぐログシートも自動生成。
+        </div>
+        <div class="work-techs">
+          <span class="work-tech">Google Apps Script</span>
+          <span class="work-tech">Googleフォーム連携</span>
+          <span class="work-tech">Gmail自動通知</span>
+          <span class="work-tech">ログ自動生成</span>
+          <span class="work-tech">トリガー設定</span>
+        </div>
+      </div>
+      <div class="work-video">
+        <!-- YouTube動画が入ったら下のplaceholderをiframeに差し替え -->
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/OVMfFZGyu0k"
+            title="フォーム自動化デモ"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+          </iframe>
+        </div>
+        <div class="video-label">// 実際の動作デモ動画</div>
+        <div class="work-result-badge">
+          <div class="result-dot"></div>
+          <span class="result-text">手作業ゼロ · 即時対応を実現</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- WORK 2: 広告レポート（Coming Soon） -->
+    <div class="work-card fade-in">
+      <div class="work-body">
+        <div class="work-cat">GAS × 広告API · 上級編</div>
+        <div class="work-title">広告レポートの<br>自動集計ダッシュボード</div>
+        <div class="work-pain">
+          😓 「毎月末にMeta広告・Google広告のデータを手でコピペして、Excelで集計して、クライアントにメール送付。5時間以上かかっていた」
+        </div>
+        <div class="work-solve">
+          広告APIからデータを自動取得し、CPA・CTR・ROASをスプレッドシートに毎日自動更新。月次レポートをPDF化してGmailで自動送信。クライアントへの報告作業がゼロに。
+        </div>
+        <div class="work-techs">
+          <span class="work-tech">Meta広告API</span>
+          <span class="work-tech">Google広告API</span>
+          <span class="work-tech">KPIダッシュボード</span>
+          <span class="work-tech">PDF自動生成</span>
+          <span class="work-tech">定期自動送信</span>
+        </div>
+      </div>
+      <div class="work-video">
+        <div class="video-placeholder">
+          <div class="play-icon">🎬</div>
+          <p>動画準備中<br>Coming Soon</p>
+        </div>
+        <div class="video-label">// デモ動画 近日公開</div>
+        <div class="work-result-badge">
+          <div class="result-dot"></div>
+          <span class="result-text">月5時間以上の工数削減</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- SERVICES -->
+<section class="section" id="services">
+  <p class="section-label fade-in">// 提供サービス</p>
+  <h2 class="section-title fade-in">料金・サービス内容</h2>
+  <p class="section-sub fade-in">まずは相談・見積もり無料です。規模に合わせてご提案します。</p>
+
+  <div class="services-intro fade-in">
+    <div class="services-intro-icon">💡</div>
+    <p>
+      「何ができるかわからない」「こんなこと頼んでいいのかな」という段階でも大丈夫です。<br>
+      <strong>現在の業務フローをヒアリングして、自動化できる部分を一緒に整理するところから始められます。</strong>相談・見積もりは無料です。
+    </p>
+  </div>
+
+  <div class="services-grid">
+
+    <div class="service-card featured fade-in">
+      <span class="featured-badge">人気 No.1</span>
+      <div class="service-icon">⚡</div>
+      <div class="service-name">GAS業務自動化<br>ツール構築</div>
+      <div class="service-desc">スプレッドシートの転記・集計・通知など、繰り返し作業をGASで自動化。「こんなこと自動化できる？」という相談からでもOKです。</div>
+      <ul class="service-includes">
+        <li>業務フローのヒアリング・設計</li>
+        <li>GASスクリプト開発・動作確認</li>
+        <li>Gmail / Slack / Chatwork通知連携</li>
+        <li>操作マニュアル作成・引き渡し</li>
+        <li>納品後30日間サポート付き</li>
+      </ul>
+      <div class="service-price-row">
+        <span class="price-from">FROM</span>
+        <span class="price-num">¥30,000</span>
+        <span class="price-unit">/ 件</span>
+      </div>
+      <p class="price-note">※内容・規模によって見積もり。まず相談ください。</p>
+    </div>
+
+    <div class="service-card fade-in">
+      <div class="service-icon">📊</div>
+      <div class="service-name">広告レポート<br>自動化セット</div>
+      <div class="service-desc">Meta広告・Google広告のデータ集計からクライアントへのレポート送付まで自動化。広告運用5年の知見で設計します。</div>
+      <ul class="service-includes">
+        <li>広告APIとのデータ連携設定</li>
+        <li>KPIダッシュボード構築</li>
+        <li>月次レポートPDF自動生成</li>
+        <li>Gmailでの定期自動送信</li>
+        <li>広告運用の改善提案も対応</li>
+      </ul>
+      <div class="service-price-row">
+        <span class="price-from">FROM</span>
+        <span class="price-num">¥50,000</span>
+        <span class="price-unit">/ 件</span>
+      </div>
+      <p class="price-note">※継続保守は月額¥10,000〜で対応可能。</p>
+    </div>
+
+    <div class="service-card fade-in">
+      <div class="service-icon">📈</div>
+      <div class="service-name">分析環境・<br>ダッシュボード構築</div>
+      <div class="service-desc">広告・営業・売上データをスプレッドシートで見える化。既存シートの改善も新規設計もどちらも対応します。</div>
+      <ul class="service-includes">
+        <li>KPI設計・指標の整理</li>
+        <li>スプレッドシート設計・構築</li>
+        <li>QUERY / ARRAYFORMULA対応</li>
+        <li>グラフ・条件付き書式設定</li>
+      </ul>
+      <div class="service-price-row">
+        <span class="price-from">FROM</span>
+        <span class="price-num">¥20,000</span>
+        <span class="price-unit">/ 件</span>
+      </div>
+      <p class="price-note">※小規模なシート改善は¥5,000〜相談可。</p>
+    </div>
+
+    <div class="service-card fade-in">
+      <div class="service-icon">🔧</div>
+      <div class="service-name">既存GASの<br>改修・保守</div>
+      <div class="service-desc">動いていたGASが壊れた、機能追加したい、引き継いだツールが理解できない。そういった案件も対応します。</div>
+      <ul class="service-includes">
+        <li>既存コードの調査・解析</li>
+        <li>エラー対応・デバッグ</li>
+        <li>機能追加・仕様変更対応</li>
+        <li>ドキュメント整備</li>
+      </ul>
+      <div class="service-price-row">
+        <span class="price-from">FROM</span>
+        <span class="price-num">¥10,000</span>
+        <span class="price-unit">/ 月</span>
+      </div>
+      <p class="price-note">※スポット対応（1回限り）も相談可。</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- FLOW -->
+<div class="flow-section" id="flow">
+  <div class="flow-inner">
+    <p class="section-label fade-in">// 依頼の流れ</p>
+    <h2 class="section-title fade-in" style="color:white;">依頼から納品まで</h2>
+    <p class="section-sub fade-in" style="margin-bottom:48px;">全てオンライン・リモートで完結します。</p>
+    <div class="flow-steps">
+      <div class="flow-step-item active fade-in">
+        <div class="flow-num">01</div>
+        <div class="flow-step-title">無料相談</div>
+        <div class="flow-step-desc">現在の業務内容・困りごとをヒアリング。何を自動化できるか整理します。</div>
+      </div>
+      <div class="flow-step-item active fade-in">
+        <div class="flow-num">02</div>
+        <div class="flow-step-title">見積もり提示</div>
+        <div class="flow-step-desc">内容・規模に応じた費用と納期をご提案。納得いただいてから契約。</div>
+      </div>
+      <div class="flow-step-item active fade-in">
+        <div class="flow-num">03</div>
+        <div class="flow-step-title">開発・確認</div>
+        <div class="flow-step-desc">進捗を共有しながら開発。途中での仕様変更も柔軟に対応します。</div>
+      </div>
+      <div class="flow-step-item active fade-in">
+        <div class="flow-num">04</div>
+        <div class="flow-step-title">納品・説明</div>
+        <div class="flow-step-desc">動作確認後に納品。使い方マニュアルも作成してお渡しします。</div>
+      </div>
+      <div class="flow-step-item active fade-in">
+        <div class="flow-num">05</div>
+        <div class="flow-step-title">アフターサポート</div>
+        <div class="flow-step-desc">納品後30日間は無償サポート。継続保守も対応可能です。</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FAQ -->
+<section class="section" id="faq">
+  <p class="section-label fade-in">// よくある質問</p>
+  <h2 class="section-title fade-in">不安を解消してから依頼できます</h2>
+  <p class="section-sub fade-in">「こんなこと聞いていいのかな」も大歓迎です。</p>
+
+  <div class="faq-list fade-in">
+    <div class="faq-item">
+      <div class="faq-q">GASやスプレッドシートの知識がなくても依頼できますか？</div>
+      <div class="faq-a">もちろんです。業務の内容と「こう変えたい」というイメージだけ教えていただければ、技術的な部分はこちらで全て対応します。専門用語がわからなくても問題ありません。</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">どのくらいの期間で納品されますか？</div>
+      <div class="faq-a">規模にもよりますが、シンプルな自動化ツールであれば3〜7日、複雑な連携や複数機能が必要な場合は2〜4週間が目安です。ご相談時に具体的な納期をお伝えします。</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">納品後に使い方がわからなくなったら？</div>
+      <div class="faq-a">納品時に操作マニュアルをお渡しします。また納品後30日間は無償でサポートいたします。30日以降も継続保守プランで対応可能です。</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">料金の目安がわかりません。まず何から相談すれば良いですか？</div>
+      <div class="faq-a">「毎週こういう作業に時間がかかっている」という内容を教えていただくだけで大丈夫です。相談・見積もりは無料なので、金額を知ってから依頼するかどうか判断していただけます。</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Googleアカウントの情報を渡すのが不安です。</div>
+      <div class="faq-a">GASはお客様自身のGoogleアカウントで動かすため、ソースコードをお渡しする形で納品します。パスワードなどの機密情報をこちらに提供していただく必要はありません。</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-section" id="contact">
+  <h2 class="cta-title fade-in">まず、話すだけでも<br>大丈夫です。</h2>
+  <p class="cta-sub fade-in">
+    「こんなこと自動化できる？」「いくらかかる？」<br>
+    相談・見積もりは完全無料。リモートで対応します。
+  </p>
+  <div class="cta-buttons fade-in">
+    <a href="https://www.coconala.com" target="_blank" class="btn-primary">ココナラで無料相談する →</a>
+    <a href="https://crowdworks.jp" target="_blank" class="btn-secondary">クラウドワークスで依頼する</a>
+  </div>
+  <p class="cta-note fade-in">返信は通常1営業日以内 · 相談・見積もり無料 · 契約前のキャンセルOK</p>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2025 業務自動化 × 広告運用 ポートフォリオ</p>
+  <p>Remote · Freelance · Available Now</p>
+</footer>
+
+<script>
+  // Intersection Observer
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 60);
+      }
+    });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  // FAQ Accordion
+  document.querySelectorAll('.faq-q').forEach(q => {
+    q.addEventListener('click', () => {
+      const item = q.parentElement;
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    });
+  });
+</script>
+</body>
+</html>
